@@ -4,7 +4,7 @@ const router = express.Router();
 const {
   login,
   signup,
-  sendotp,
+  sendOTP,
   changePassword,
 } = require("../controllers/Auth");
 
@@ -19,7 +19,7 @@ router.post("/login", login);
 
 router.post("/signup", signup);
 
-router.post("/sendotp", sendotp);
+router.post("/sendotp", sendOTP);
 
 router.post("/changepassword", auth, changePassword);
 

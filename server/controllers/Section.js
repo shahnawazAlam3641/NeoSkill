@@ -37,7 +37,7 @@ exports.createSection = async (req, res) => {
   }
 };
 
-exports.updatedSection = async (req, res) => {
+exports.updateSection = async (req, res) => {
   try {
     const { sectionName, sectionId } = req.boy;
     if (!sectionName || !sectionId) {
@@ -68,7 +68,7 @@ exports.updatedSection = async (req, res) => {
   }
 };
 
-exports.deleSection = async (req, res) => {
+exports.deleteSection = async (req, res) => {
   try {
     const { sectionId } = req.params;
 

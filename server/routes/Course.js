@@ -28,7 +28,8 @@ const {
 const {
   createRating,
   getAverageRating,
-  getAllRating,
+
+  getAllRatingReview,
 } = require("../controllers/RatingAndReview");
 
 const {
@@ -68,6 +69,6 @@ router.post("/createRating", auth, isStudent, createRating);
 
 router.get("/getAverageRating", getAverageRating);
 
-router.get("/getReviews", getAllRating);
+router.get("/getReviews", getAllRatingReview);
 
 module.exports = router;

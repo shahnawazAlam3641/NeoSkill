@@ -43,7 +43,7 @@ const userSchema = new mongoose.Schema({
   ],
   image: {
     type: String,
-    reuired: True,
+    reuired: true,
   },
   token: {
     type: String,
