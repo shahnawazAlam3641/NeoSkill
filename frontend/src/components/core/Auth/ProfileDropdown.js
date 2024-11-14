@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import useOnClickOutside from "../../hooks/useOnClickOutside";
+import useOnClickOutside from "../../../hooks/useOnClickOutside";
 import { AiOutlineCaretDown } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import { logout } from "../../services/operations/authAPI";
+import { logout } from "../../../services/operations/authAPI";
 import { VscDashboard, VscSignOut } from "react-icons/vsc";
 
 const ProfileDropdown = () => {
