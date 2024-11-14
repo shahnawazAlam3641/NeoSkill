@@ -17,8 +17,6 @@ const dotenv = require("dotenv");
 dotenv.config();
 const PORT = process.env.PORT || 4000;
 
-connectDB();
-
 app.use(express.json());
 app.use(cookieParser());
 app.use(
@@ -49,6 +47,10 @@ app.get("/", (req, res) => {
   });
 });
 
-app.listen(PORT, () => {
-  console.log(`App is running at ${PORT}`);
-});
+connectDB()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`App is running at ${PORT}`);
+    });
+  })
+  .catch((error) => console.log("DB connection failed"));
