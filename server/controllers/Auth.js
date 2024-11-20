@@ -2,6 +2,9 @@ const OTP = require("../models/OTP");
 const User = require("../models/User");
 const otpGenerator = require("otp-generator");
 const mailSender = require("../utils/mailSender");
+const bcrypt = require("bcrypt");
+const Profile = require("../models/Profile");
+const jwt = require("jsonwebtoken");
 
 exports.signup = async (req, res) => {
   try {
@@ -12,7 +15,6 @@ exports.signup = async (req, res) => {
       password,
       confirmPassword,
       accountType,
-      contactNumber,
       otp,
     } = req.body;
 
@@ -23,7 +25,6 @@ exports.signup = async (req, res) => {
       !password ||
       !confirmPassword ||
       !accountType ||
-      !contactNumber ||
       !otp
     ) {
       return res.status(403).json({
@@ -83,7 +84,6 @@ exports.signup = async (req, res) => {
       firstName,
       lastName,
       email,
-      contactNumber,
       password: hashedPassword,
       accountType,
       approved,
@@ -143,7 +143,7 @@ exports.login = async (req, res) => {
       user.password = undefined;
 
       res.cookie("token", token, {
-        expires: new Date(Daate.now() + 3 * 24 * 60 * 60 * 1000),
+        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
         // httpOnly: true,
       });
 
