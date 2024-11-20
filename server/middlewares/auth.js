@@ -10,6 +10,7 @@ exports.auth = async (req, res, next) => {
       req.header("Authorisation").replace("Bearer ", "");
 
     if (!token) {
+      console.log("auth middleware");
       return res.status(401).json({
         success: false,
         message: "Token is missing",
