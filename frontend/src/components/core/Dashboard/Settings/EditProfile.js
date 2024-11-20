@@ -5,7 +5,7 @@ import { useForm } from "react-hook-form";
 import { updateProfile } from "../../../../services/operations/SettingAPI";
 import IconBtn from "../../../common/IconBtn";
 
-const genders = ["Male", "Female", "Non-Binary", "Prefer not to say", "Other"];
+const genders = ["Male", "Female", "Other"];
 
 const EditProfile = () => {
   const { user } = useSelector((state) => state.profile);
@@ -22,6 +22,7 @@ const EditProfile = () => {
   const submitProfileForm = async (data) => {
     // console.log("Form Data - ", data)
     try {
+      console.log(data);
       dispatch(updateProfile(token, data));
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message);
