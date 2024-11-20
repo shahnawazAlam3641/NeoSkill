@@ -4,7 +4,7 @@ import { useNavigate } from "react-router";
 import { sidebarLinks } from "../../../data/dashboard-links";
 import SidebarLink from "./SidebarLink";
 import { VscSignOut } from "react-icons/vsc";
-import logout from "../../../services/operations/authAPI";
+import { logout } from "../../../services/operations/authAPI";
 import ConfirmationModal from "../../common/ConfirmationModal";
 
 const Sidebar = () => {

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router";
 import { fetchInstructorCourses } from "../../../services/operations/courseDetailsAPI";
 import IconBtn from "../../common/IconBtn";
 import { VscAdd } from "react-icons/vsc";
+import CoursesTable from "./InstructorCourses/CourseTable";
 
 const MyCourses = () => {
   const { token } = useSelector((state) => state.auth);

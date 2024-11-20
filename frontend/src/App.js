@@ -21,11 +21,20 @@ import MyCourses from "./components/core/Dashboard/MyCourses";
 import AddCourse from "./components/core/Dashboard/AddCourse";
 import EditCourse from "./components/core/Dashboard/EditCourse";
 import EnrolledCourses from "./components/core/Dashboard/EnrolledCourses";
+import Cart from "./components/core/Dashboard/Cart";
+import ViewCourse from "./pages/ViewCourse";
+import VideoDetails from "./components/core/ViewCourse/VideoDetails";
+import Error from "./pages/Error";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import CourseDetails from "./pages/CourseDetails";
+import Catalog from "./pages/Catalog";
 
 function App() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { user } = useSelector((state) => state.profile);
+  // console.log(user);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
@@ -39,6 +48,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="courses/:courseId" element={<CourseDetails />} />
+        <Route path="catalog/:catalogName" element={<Catalog />} />
         {/* Open Route - for Only Non Logged in User */}
         <Route
           path="login"
@@ -110,12 +123,32 @@ function App() {
                 path="dashboard/enrolled-courses"
                 element={<EnrolledCourses />}
               />
+              <Route path="/dashboard/cart" element={<Cart />} />
             </>
           )}
           <Route path="dashboard/settings" element={<Settings />} />
         </Route>
 
         {/* For the watching course lectures */}
+        <Route
+          element={
+            <PrivateRoute>
+              <ViewCourse />
+            </PrivateRoute>
+          }
+        >
+          {user?.accountType === ACCOUNT_TYPE.STUDENT && (
+            <>
+              <Route
+                path="view-course/:courseId/section/:sectionId/sub-section/:subSectionId"
+                element={<VideoDetails />}
+              />
+            </>
+          )}
+        </Route>
+
+        {/* 404 Page */}
+        <Route path="*" element={<Error />} />
       </Routes>
     </div>
   );

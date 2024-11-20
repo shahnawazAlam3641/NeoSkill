@@ -3,11 +3,11 @@ import { apiConnector } from "../../../services/apiConnector";
 import { ratingsEndpoints } from "../../../services/api";
 
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, FreeMode, Pagination } from "swiper";
+import { Autoplay, FreeMode, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/pagination";
-import "../../App.css";
+// import "../../App.css";
 
 import ReactStars from "react-rating-stars-component";
 

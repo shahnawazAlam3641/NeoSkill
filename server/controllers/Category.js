@@ -31,12 +31,17 @@ exports.createCategory = async (req, res) => {
 
 exports.showAllCategories = async (req, res) => {
   try {
-    const allCategories = await Tag.find({}, { name: true, description: true });
+    const allCategories = await Category.find(
+      {},
+      { name: true, description: true, courses: true }
+    );
+
+    // console.log(allCategories);
 
     return res.status(200).json({
       success: true,
       message: "Got all Categories successfuully",
-      allTags,
+      allCategories,
     });
   } catch (error) {
     console.log(error);
@@ -62,7 +67,7 @@ exports.categoryPageDetails = async (req, res) => {
         .json({ success: false, message: "Category not found" });
     }
 
-    if (selectedCategory.courses.length === 0) {
+    if (selectedCategory?.courses.length === 0) {
       return res.status(404).json({
         success: false,
         message: "No courses found for the selected ccategory",
@@ -88,11 +93,13 @@ exports.categoryPageDetails = async (req, res) => {
       .slice(0, 10);
 
     res.status(200).json({
+      success: true,
       selectedCourses: selectedCourses,
       differentCourses: differentCourses,
       mostSellingCourses: mostSellingCourses,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       success: false,
       message: "Error occured while fetching Category page Details",

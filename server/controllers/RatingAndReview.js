@@ -1,4 +1,5 @@
 const Course = require("../models/Course");
+const RatingAndReviews = require("../models/RatingAndReviews");
 
 exports.createRating = async (req, res) => {
   try {
@@ -103,7 +104,8 @@ exports.getAverageRating = async (req, res) => {
 // Get all rating and reviews
 exports.getAllRatingReview = async (req, res) => {
   try {
-    const allReviews = await RatingAndReview.find({})
+    // console.log("first");
+    const allReviews = await RatingAndReviews.find({})
       .sort({ rating: "desc" })
       .populate({
         path: "user",
@@ -114,8 +116,9 @@ exports.getAllRatingReview = async (req, res) => {
         select: "courseName", //Specify the fields you want to populate from the "Course" model
       })
       .exec();
+    // console.log(allReviews);
 
-    res.status(200).json({
+    return res.status(200).json({
       success: true,
       data: allReviews,
     });
