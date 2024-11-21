@@ -48,7 +48,7 @@ export async function getUserEnrolledCourses(token) {
       GET_USER_ENROLLED_COURSES_API,
       null,
       {
-        Authorization: `Bearer ${token}`,
+        Authorisation: `Bearer ${token}`,
       }
     );
     // console.log(
@@ -73,7 +73,7 @@ export async function getInstructorData(token) {
   let result = [];
   try {
     const response = await apiConnector("GET", GET_INSTRUCTOR_DATA_API, null, {
-      Authorization: `Bearer ${token}`,
+      Authorisation: `Bearer ${token}`,
     });
     console.log("GET_INSTRUCTOR_DATA_API API RESPONSE............", response);
     result = response?.data?.courses;
