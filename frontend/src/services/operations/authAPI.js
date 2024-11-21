@@ -173,6 +173,7 @@ export function resetPassword(password, confirmPassword, token, navigate) {
 }
 
 export function logout(navigate) {
+  console.log(resetCart);
   return (dispatch) => {
     dispatch(setToken(null));
     dispatch(setUser(null));
