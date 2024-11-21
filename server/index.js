@@ -29,11 +29,23 @@ app.use(
 app.use(
   fileUpload({
     useTempFiles: true,
-    tempFileDir: "/tmp",
+    tempFileDir: "/tmp/",
   })
 );
 
 cloudinaryConnect();
+
+app.post("/test-upload", (req, res) => {
+  if (!req.files || !req.files.file) {
+    return res.status(400).send("No files were uploaded.");
+  }
+
+  const file = req.files.file;
+  res.send({
+    name: file.name,
+    tempFilePath: file.tempFilePath || "tempFilePath not generated",
+  });
+});
 
 app.use("/api/v1/auth", userRoutes);
 app.use("/api/v1/profile", profileRoutes);

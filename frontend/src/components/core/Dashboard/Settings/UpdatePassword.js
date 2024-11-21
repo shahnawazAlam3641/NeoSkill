@@ -13,6 +13,8 @@ const UpdatePassword = () => {
   const [showOldPassword, setShowOldPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
 
+  const [showConfirmNewPassword, setShowConfirmNewPassword] = useState(false);
+
   const {
     register,
     handleSubmit,
@@ -20,8 +22,9 @@ const UpdatePassword = () => {
   } = useForm();
 
   const submitPasswordForm = async (data) => {
-    // console.log("password Data - ", data)
+    console.log("password Data - ", data);
     try {
+      console.log("callimng change password");
       await changePassword(token, data);
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message);
@@ -87,6 +90,35 @@ const UpdatePassword = () => {
               {errors.newPassword && (
                 <span className="-mt-1 text-[12px] text-yellow-100">
                   Please enter your New Password.
+                </span>
+              )}
+            </div>
+            {/* added this */}
+            <div className="relative flex flex-col gap-2 lg:w-[48%]">
+              <label htmlFor="confirmNewPassword" className="lable-style">
+                Confirm New Password
+              </label>
+              <input
+                type={showConfirmNewPassword ? "text" : "password"}
+                name="confirmNewPassword"
+                id="confirmNewPassword"
+                placeholder="Enter New Password"
+                className="form-style"
+                {...register("confirmNewPassword", { required: true })}
+              />
+              <span
+                onClick={() => setShowConfirmNewPassword((prev) => !prev)}
+                className="absolute right-3 top-[38px] z-[10] cursor-pointer"
+              >
+                {showConfirmNewPassword ? (
+                  <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
+                ) : (
+                  <AiOutlineEye fontSize={24} fill="#AFB2BF" />
+                )}
+              </span>
+              {errors.confirmNewPassword && (
+                <span className="-mt-1 text-[12px] text-yellow-100">
+                  Please confirm your New Password.
                 </span>
               )}
             </div>

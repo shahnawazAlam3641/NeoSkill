@@ -23,7 +23,7 @@ export function getUserDetails(token, navigate) {
       if (!response.data.success) {
         throw new Error(response.data.message);
       }
-      console.log("okokokokokokokok");
+      // console.log("okokokokokokokok");
       const userImage = response.data.user.image
         ? response.data.user.image
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.data.lastName}`;

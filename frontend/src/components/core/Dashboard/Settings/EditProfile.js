@@ -22,7 +22,7 @@ const EditProfile = () => {
   const submitProfileForm = async (data) => {
     // console.log("Form Data - ", data)
     try {
-      console.log(data);
+      // console.log(data);
       dispatch(updateProfile(token, data));
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message);

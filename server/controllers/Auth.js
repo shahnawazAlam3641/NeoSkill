@@ -5,6 +5,7 @@ const mailSender = require("../utils/mailSender");
 const bcrypt = require("bcrypt");
 const Profile = require("../models/Profile");
 const jwt = require("jsonwebtoken");
+const { passwordUpdate } = require("../mail/templates/passswordUpdate");
 
 exports.signup = async (req, res) => {
   try {
@@ -214,7 +215,8 @@ exports.changePassword = async (req, res) => {
   try {
     const userDetails = await User.findById(req.user.id);
 
-    const { oldPassword, newPassword, confirmPassword } = req.body;
+    const { oldPassword, newPassword, confirmNewPassword } = req.body;
+    // console.log(confirmNewPassword);
 
     const isPasswordMatch = await bcrypt.compare(
       oldPassword,
@@ -234,7 +236,7 @@ exports.changePassword = async (req, res) => {
       });
     }
 
-    const hashedPassword = await bcrypt.hash(newPassword, 100);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
     updatedUserDetails = await User.findByIdAndUpdate(
       req.user.id,
       { password: hashedPassword },
@@ -245,7 +247,7 @@ exports.changePassword = async (req, res) => {
     try {
       const emailResponse = await mailSender(
         updatedUserDetails.email,
-        passwordUpdated(
+        passwordUpdate(
           updatedUserDetails.email,
           `Password updated successfully: for ${updatedUserDetails.firstName} ${updatedUserDetails.lastName}`
         )

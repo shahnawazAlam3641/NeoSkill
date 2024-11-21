@@ -21,7 +21,7 @@ router.post("/signup", signup);
 
 router.post("/sendotp", sendOTP);
 
-router.post("/changepassword", auth, changePassword);
+router.put("/changepassword", auth, changePassword);
 
 router.post("/reset-password-token", resetPasswordToken);
 

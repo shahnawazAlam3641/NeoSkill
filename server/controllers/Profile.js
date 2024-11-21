@@ -1,11 +1,12 @@
 const User = require("../models/User");
 const Profile = require("../models/Profile");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
+require("dotenv").config();
 
 exports.updateProfile = async (req, res) => {
   try {
     const { dateOfBirth = "", about = "", contactNumber, gender } = req.body;
-    console.log(req.body);
+    // console.log(req.body);
     const id = req.user.id;
 
     // if (!contactNumber || !gender || !id) {
@@ -50,7 +51,7 @@ exports.deleteAccount = async (req, res) => {
 
     const id = req.user.id;
 
-    const user = await User.findById({ id });
+    const user = await User.findById(id);
 
     if (!user) {
       return res.status(404).json({
@@ -101,12 +102,16 @@ exports.updateDisplayPicture = async (req, res) => {
   try {
     const displayPicture = req.files.displayPicture;
     const userId = req.user.id;
+
+    // console.log(displayPicture.tempFilePath);
     const image = await uploadImageToCloudinary(
-      displayPicture,
+      displayPicture.tempFilePath,
       process.env.FOLDER_NAME,
       1000,
       1000
     );
+
+    // console.log(image);
 
     const updatedProfile = await User.findByIdAndUpdate(
       { _id: userId },

@@ -1,6 +1,7 @@
-const cloudinary = require("cloudinary");
+const cloudinary = require("cloudinary").v2;
 
-exports.uploadImageToCloudinary = async (file, folder, height, quality) => {
+exports.uploadImageToCloudinary = async (filePath, folder, height, quality) => {
+  // console.log(file, folder);
   const options = { folder };
   if (height) {
     options.height = height;
@@ -9,7 +10,14 @@ exports.uploadImageToCloudinary = async (file, folder, height, quality) => {
     options.quality = quality;
   }
 
-  options.resource_type = "autto";
+  options.resource_type = "auto";
+  // console.log(options);
 
-  return await cloudinary.uploader.upload(file.tempFilepath, options);
+  try {
+    // console.log(filePath);
+    return await cloudinary.uploader.upload(filePath, options);
+    console.log("hellow");
+  } catch (error) {
+    console.log(error);
+  }
 };
