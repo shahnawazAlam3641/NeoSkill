@@ -35,7 +35,7 @@ const CourseDetails = () => {
     (async () => {
       try {
         const res = await fetchCourseDetails(courseId);
-        // console.log("course details res: ", res)
+        console.log("course details res: ", res);
         setResponse(res);
       } catch (error) {
         console.log("Could not fetch Course Details");
@@ -75,6 +75,8 @@ const CourseDetails = () => {
     setTotalNoOfLectures(lectures);
   }, [response]);
 
+  console.log(response);
+
   if (loading || !response) {
     return (
       <div className="grid min-h-[calc(100vh-3.5rem)] place-items-center">
@@ -85,7 +87,7 @@ const CourseDetails = () => {
   if (!response.success) {
     return <Error />;
   }
-
+  console.log(response);
   const {
     _id: course_id,
     courseName,
@@ -98,7 +100,7 @@ const CourseDetails = () => {
     instructor,
     studentsEnroled,
     createdAt,
-  } = response.data?.courseDetails;
+  } = response?.data?.courseDetails;
 
   const handleBuyCourse = () => {
     if (token) {

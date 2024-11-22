@@ -160,25 +160,49 @@ exports.getCourseDetails = async (req, res) => {
   try {
     const { courseId } = req.body;
 
-    const courseDetails = await Course.find({ _id: courseId })
+    const courseDetails = await Course.findOne({ _id: courseId })
       .populate({
         path: "instructor",
         populate: {
           path: "additionalDetails",
         },
       })
+      .populate("category")
+      .populate("ratingAndReviews")
       .populate({
         path: "courseContent",
         populate: {
           path: "subSection",
+          select: "-videoUrl",
         },
       })
       .exec();
 
+    if (!courseDetails) {
+      return res.status(400).json({
+        success: false,
+        message: `Could not find course with id: ${courseId}`,
+      });
+    }
+
+    console.log("courseDetails", courseDetails);
+
+    let totalDurationInSeconds = 0;
+    courseDetails.courseContent.forEach((content) => {
+      content.subSection.forEach((subSection) => {
+        const timeDurationInSeconds = parseInt(subSection.timeDuration);
+        totalDurationInSeconds += timeDurationInSeconds;
+      });
+    });
+
+    const totalDuration = secondsToDuration(totalDurationInSeconds);
+
     return res.status(200).json({
       success: true,
-      message: "Course Details fetched successfully",
-      data: courseDetails,
+      data: {
+        courseDetails,
+        totalDuration,
+      },
     });
   } catch (error) {
     console.error(error);
