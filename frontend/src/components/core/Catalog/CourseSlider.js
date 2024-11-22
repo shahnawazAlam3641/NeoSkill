@@ -1,8 +1,12 @@
 import React from "react";
-import Swiper from "swiper";
+// import { Swiper } from "swiper";
 import { FreeMode, Pagination } from "swiper/modules";
-import { SwiperSlide } from "swiper/react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import CourseCard from "../../core/Catalog/CourseCard";
+
+import "swiper/css";
+import "swiper/css/free-mode";
+import "swiper/css/pagination";
 
 const CourseSlider = ({ Courses }) => {
   return (

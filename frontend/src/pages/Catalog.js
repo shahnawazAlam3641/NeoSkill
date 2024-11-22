@@ -24,7 +24,7 @@ const Catalog = () => {
       try {
         // console.log(categories.CATEGORIES_API);
         const res = await apiConnector("GET", categories.CATEGORIES_API);
-        // console.log(res);
+        console.log(res);
         const category_id = res?.data?.allCategories?.filter(
           (ct) => ct.name.split(" ").join("-").toLowerCase() === catalogName
         )[0]._id;
@@ -107,6 +107,7 @@ const Catalog = () => {
           </p>
         </div>
         <div>
+          {console.log("lime 110")}
           <CourseSlider
             Courses={catalogPageData?.data?.selectedCategory?.courses}
           />
@@ -118,6 +119,7 @@ const Catalog = () => {
           Top courses in {catalogPageData?.data?.differentCategory?.name}
         </div>
         <div className="py-8">
+          {console.log("lime 110")}
           <CourseSlider
             Courses={catalogPageData?.data?.differentCategory?.courses}
           />
