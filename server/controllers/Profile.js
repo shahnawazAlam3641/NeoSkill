@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const Profile = require("../models/Profile");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
+const Course = require("../models/Course");
 require("dotenv").config();
 
 exports.updateProfile = async (req, res) => {
@@ -158,6 +159,36 @@ exports.getEnrolledCourses = async (req, res) => {
       success: false,
       message: "Error occured while getting enrolled courses of student",
       error,
+    });
+  }
+};
+
+exports.instructorDashboard = async (req, res) => {
+  try {
+    const courseDetails = await Course.find({ instructor: req.user.id });
+
+    const courseData = courseDetails.map((course) => {
+      const totalStudentsEnrolled = course.studentsEnrolled.length;
+      const totalAmountGenerated = totalStudentsEnrolled * course.price;
+
+      const courseDataWithStats = {
+        _id: course._id,
+        courseName: course.courseName,
+        courseDescription: course.courseDescription,
+        totalStudentsEnrolled,
+        totalAmountGenerated,
+      };
+
+      return courseDataWithStats;
+    });
+
+    return res.status(200).json({ success: true, courses: courseData });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({
+      success: false,
+      message: "something went wrong while getting instructor dashboard data",
+      error: error.message,
     });
   }
 };

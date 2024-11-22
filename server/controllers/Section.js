@@ -1,5 +1,6 @@
 const Course = require("../models/Course");
 const Section = require("../models/Section");
+const SubSection = require("../models/SubSection");
 
 exports.createSection = async (req, res) => {
   try {
@@ -39,8 +40,8 @@ exports.createSection = async (req, res) => {
 
 exports.updateSection = async (req, res) => {
   try {
-    const { sectionName, sectionId } = req.boy;
-    if (!sectionName || !sectionId) {
+    const { sectionName, sectionId, courseId } = req.body;
+    if (!sectionName || !sectionId || !courseId) {
       return res.status(400).json({
         success: false,
         message: "Missing props",
@@ -53,10 +54,20 @@ exports.updateSection = async (req, res) => {
       { new: true }
     );
 
+    const course = await Course.findById(courseId)
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
+
     return res.status(200).json({
       success: true,
       message: "Section updated Successfully",
       section,
+      course,
     });
   } catch (error) {
     console.error(error);
@@ -70,21 +81,46 @@ exports.updateSection = async (req, res) => {
 
 exports.deleteSection = async (req, res) => {
   try {
-    const { sectionId } = req.params;
+    const { sectionId, courseId } = req.body;
+    await Course.findByIdAndUpdate(courseId, {
+      $pull: {
+        courseContent: sectionId,
+      },
+    });
+    const section = await Section.findById(sectionId);
+    console.log(sectionId, courseId);
+    if (!section) {
+      return res.status(404).json({
+        success: false,
+        message: "Section not found",
+      });
+    }
+    // Delete the associated subsections
+    await SubSection.deleteMany({ _id: { $in: section.subSection } });
 
     await Section.findByIdAndDelete(sectionId);
-    //T-ODO[Testing]: do we need to delete the entry from the course schema ??
 
-    return res.status(200).json({
+    // find the updated course and return it
+    const course = await Course.findById(courseId)
+      .populate({
+        path: "courseContent",
+        populate: {
+          path: "subSection",
+        },
+      })
+      .exec();
+
+    res.status(200).json({
       success: true,
-      message: "Section Deleted Successfully",
+      message: "Section deleted",
+      data: course,
     });
   } catch (error) {
-    console.error(error);
-    return res.status(500).json({
+    console.error("Error deleting section:", error);
+    res.status(500).json({
       success: false,
-      message: "Error occured while deleting Section",
-      error,
+      message: "Internal server error",
+      error: error.message,
     });
   }
 };

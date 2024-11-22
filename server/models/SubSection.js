@@ -16,7 +16,6 @@ const subSectionSchema = new mongoose.Schema({
   },
   timeDuration: {
     type: String,
-    required: true,
   },
 });
 

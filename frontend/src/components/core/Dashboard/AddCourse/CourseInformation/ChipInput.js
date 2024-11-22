@@ -10,7 +10,7 @@ const ChipInput = ({
   register,
   errors,
   setValue,
-  getValues,
+  getValue,
 }) => {
   const { editCourse, course } = useSelector((state) => state.course);
 

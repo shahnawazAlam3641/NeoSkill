@@ -31,10 +31,13 @@ const CourseInformationForm = () => {
   const [loading, setLoading] = useState(false);
   const [courseCategories, setCourseCategories] = useState([]);
 
+  console.log(course, editCourse);
+
   useEffect(() => {
     const getCategories = async () => {
       setLoading(true);
       const categories = await fetchCourseCategories();
+      console.log(categories);
       if (categories.length > 0) {
         // console.log("categories", categories)
         setCourseCategories(categories);
@@ -119,7 +122,7 @@ const CourseInformationForm = () => {
         if (currentValues.courseImage !== course.thumbnail) {
           formData.append("thumbnailImage", data.courseImage);
         }
-        // console.log("Edit Form data: ", formData)
+        // console.log("Edit Form data: ", formData);
         setLoading(true);
         const result = await editCourseDetails(formData, token);
         setLoading(false);
@@ -144,6 +147,23 @@ const CourseInformationForm = () => {
     formData.append("instructions", JSON.stringify(data.courseRequirements));
     formData.append("thumbnailImage", data.courseImage);
     setLoading(true);
+    // console.log(
+    //   data.courseTitle,
+    //   data.courseShortDesc,
+    //   data.coursePrice,
+    //   data.courseTags,
+    //   data.courseBenefits,
+    //   data.courseCategory,
+    //   COURSE_STATUS.DRAFT,
+    //   JSON.stringify(data.courseRequirements),
+    //   data.courseImage
+    // );
+    // console.log(formData);
+
+    // console.log("FormData Entries:");
+    // for (let [key, value] of formData.entries()) {
+    //   console.log(`${key}:`, value);
+    // }
     const result = await addCourseDetails(formData, token);
     if (result) {
       dispatch(setStep(2));

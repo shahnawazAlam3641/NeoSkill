@@ -55,8 +55,9 @@ const CourseBuilderForm = () => {
         token
       );
     }
+    console.log(result);
     if (result) {
-      // console.log("section result", result)
+      console.log("section result", result);
       dispatch(setCourse(result));
       setEditSectionName(null);
       setValue("sectionName", "");
@@ -138,6 +139,7 @@ const CourseBuilderForm = () => {
           )}
         </div>
       </form>
+      {console.log(course)}
       {course.courseContent.length > 0 && (
         <NestedView handleChangeEditSectionName={handleChangeEditSectionName} />
       )}

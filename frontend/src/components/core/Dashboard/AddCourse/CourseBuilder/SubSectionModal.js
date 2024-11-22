@@ -110,6 +110,7 @@ const SubSectionModal = ({
     formData.append("video", data.lectureVideo);
     setLoading(true);
     const result = await createSubSection(formData, token);
+    console.log(result);
     if (result) {
       // update the structure of course
       const updatedCourseContent = course.courseContent.map((section) =>

@@ -96,6 +96,7 @@ const Instructor = () => {
               </Link>
             </div>
             <div className="my-4 flex items-start space-x-6">
+              {console.log(courses)}
               {courses.slice(0, 3).map((course) => (
                 <div key={course._id} className="w-1/3">
                   <img
@@ -109,7 +110,8 @@ const Instructor = () => {
                     </p>
                     <div className="mt-1 flex items-center space-x-2">
                       <p className="text-xs font-medium text-richblack-300">
-                        {course.studentsEnroled.length} students
+                        {console.log(course)}
+                        {course.studentsEnrolled.length} students
                       </p>
                       <p className="text-xs font-medium text-richblack-300">
                         |
