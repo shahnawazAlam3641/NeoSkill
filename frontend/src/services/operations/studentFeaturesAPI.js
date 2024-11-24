@@ -49,6 +49,7 @@ export async function buyCourse(
     }
 
     // Initiating the Order in Backend
+    console.log(COURSE_PAYMENT_API);
     const orderResponse = await apiConnector(
       "POST",
       COURSE_PAYMENT_API,
@@ -59,6 +60,8 @@ export async function buyCourse(
         Authorisation: `Bearer ${token}`,
       }
     );
+
+    console.log(orderResponse);
 
     if (!orderResponse.data.success) {
       throw new Error(orderResponse.data.message);
@@ -109,6 +112,7 @@ async function verifyPayment(bodyData, token, navigate, dispatch) {
   const toastId = toast.loading("Verifying Payment...");
   dispatch(setPaymentLoading(true));
   try {
+    console.log(COURSE_VERIFY_API);
     const response = await apiConnector("POST", COURSE_VERIFY_API, bodyData, {
       Authorisation: `Bearer ${token}`,
     });
@@ -133,6 +137,7 @@ async function verifyPayment(bodyData, token, navigate, dispatch) {
 // Send the Payment Success Email
 async function sendPaymentSuccessEmail(response, amount, token) {
   try {
+    console.log(SEND_PAYMENT_SUCCESS_EMAIL_API);
     await apiConnector(
       "POST",
       SEND_PAYMENT_SUCCESS_EMAIL_API,

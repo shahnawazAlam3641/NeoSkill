@@ -2,6 +2,7 @@ import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 import IconBtn from "../../../common/IconBtn";
+import { buyCourse } from "../../../../services/operations/studentFeaturesAPI";
 
 const RenderTotalAmount = () => {
   const { total, cart } = useSelector((state) => state.cart);
@@ -11,8 +12,9 @@ const RenderTotalAmount = () => {
   const dispatch = useDispatch();
 
   const handleBuyCourse = () => {
+    console.log(cart);
     const courses = cart.map((course) => course._id);
-    handleBuyCourse(token, courses, user, navigate, dispatch);
+    buyCourse(token, courses, user, navigate, dispatch);
   };
 
   return (
