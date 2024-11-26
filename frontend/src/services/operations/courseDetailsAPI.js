@@ -358,6 +358,7 @@ export const markLectureAsComplete = async (data, token) => {
   // console.log("mark complete data", data);
   const toastId = toast.loading("Loading...");
   try {
+    console.log(LECTURE_COMPLETION_API);
     const response = await apiConnector("POST", LECTURE_COMPLETION_API, data, {
       Authorisation: `Bearer ${token}`,
     });
