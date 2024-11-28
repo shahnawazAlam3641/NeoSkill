@@ -9,6 +9,7 @@ import { BsFillCaretRightFill } from "react-icons/bs";
 import { FaShareSquare } from "react-icons/fa";
 
 const CourseDetailsCard = ({
+  handleAddToCart,
   course,
   setConfirmationModal,
   handleBuyCourse,
@@ -29,24 +30,24 @@ const CourseDetailsCard = ({
     toast.success("Link copied to clipboard");
   };
 
-  const handleAddToCart = () => {
-    if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
-      toast.error("You are an Instructor. You can't buy a course.");
-      return;
-    }
-    if (token) {
-      dispatch(addToCart(course));
-      return;
-    }
-    setConfirmationModal({
-      text1: "You are not logged in!",
-      text2: "Please login to add To Cart",
-      btn1Text: "Login",
-      btn2Text: "Cancel",
-      btn1Handler: () => navigate("/login"),
-      btn2Handler: () => setConfirmationModal(null),
-    });
-  };
+  // const handleAddToCart = () => {
+  //   if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
+  //     toast.error("You are an Instructor. You can't buy a course.");
+  //     return;
+  //   }
+  //   if (token) {
+  //     dispatch(addToCart(course));
+  //     return;
+  //   }
+  //   setConfirmationModal({
+  //     text1: "You are not logged in!",
+  //     text2: "Please login to add To Cart",
+  //     btn1Text: "Login",
+  //     btn2Text: "Cancel",
+  //     btn1Handler: () => navigate("/login"),
+  //     btn2Handler: () => setConfirmationModal(null),
+  //   });
+  // };
 
   // console.log("Student already enrolled ", course?.studentsEnrolled, user?._id)
 

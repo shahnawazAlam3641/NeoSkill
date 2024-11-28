@@ -14,6 +14,9 @@ import ReactMarkdown from "react-markdown";
 import CourseAccordionBar from "../components/core/Course/CourseAccordionBar";
 import Footer from "../components/common/Footer";
 import ConfirmationModal from "../components/common/ConfirmationModal";
+import toast from "react-hot-toast";
+import { ACCOUNT_TYPE } from "../utils/constants";
+import { addToCart } from "../slices/cartSlice";
 
 const CourseDetails = () => {
   const { user } = useSelector((state) => state.profile);
@@ -23,6 +26,9 @@ const CourseDetails = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  // Total number of lectures
+  const [totalNoOfLectures, setTotalNoOfLectures] = useState(0);
+
   // Getting courseId from url parameter
   const { courseId } = useParams();
   // console.log(`course id: ${courseId}`)
@@ -30,6 +36,10 @@ const CourseDetails = () => {
   // Declear a state to save the course details
   const [response, setResponse] = useState(null);
   const [confirmationModal, setConfirmationModal] = useState(null);
+
+  // Calculating Avg Review count
+  const [avgReviewCount, setAvgReviewCount] = useState(0);
+
   useEffect(() => {
     // Calling fetchCourseDetails fucntion to fetch the details
     (async () => {
@@ -45,8 +55,6 @@ const CourseDetails = () => {
 
   // console.log("response: ", response)
 
-  // Calculating Avg Review count
-  const [avgReviewCount, setAvgReviewCount] = useState(0);
   useEffect(() => {
     const count = getAvgRating(response?.data?.courseDetails.ratingAndReviews);
     setAvgReviewCount(count);
@@ -55,18 +63,16 @@ const CourseDetails = () => {
 
   // // Collapse all
   // const [collapse, setCollapse] = useState("")
-  const [isActive, setIsActive] = useState(Array(0));
+  const [isActive, setIsActive] = useState([]);
   const handleActive = (id) => {
     // console.log("called", id)
     setIsActive(
       !isActive.includes(id)
         ? isActive.concat([id])
-        : isActive.filter((e) => e != id)
+        : isActive.filter((e) => e !== id)
     );
   };
 
-  // Total number of lectures
-  const [totalNoOfLectures, setTotalNoOfLectures] = useState(0);
   useEffect(() => {
     let lectures = 0;
     response?.data?.courseDetails?.courseContent?.forEach((sec) => {
@@ -110,6 +116,25 @@ const CourseDetails = () => {
     setConfirmationModal({
       text1: "You are not logged in!",
       text2: "Please login to Purchase Course.",
+      btn1Text: "Login",
+      btn2Text: "Cancel",
+      btn1Handler: () => navigate("/login"),
+      btn2Handler: () => setConfirmationModal(null),
+    });
+  };
+
+  const handleAddToCart = () => {
+    if (user && user?.accountType === ACCOUNT_TYPE.INSTRUCTOR) {
+      toast.error("You are an Instructor. You can't buy a course.");
+      return;
+    }
+    if (token) {
+      dispatch(addToCart(response?.data?.courseDetails));
+      return;
+    }
+    setConfirmationModal({
+      text1: "You are not logged in!",
+      text2: "Please login to add To Cart",
       btn1Text: "Login",
       btn2Text: "Cancel",
       btn1Handler: () => navigate("/login"),
@@ -175,15 +200,47 @@ const CourseDetails = () => {
               <p className="space-x-3 pb-4 text-3xl font-semibold text-richblack-5">
                 Rs. {price}
               </p>
-              <button className="yellowButton" onClick={handleBuyCourse}>
+              {/* <button className="yellowButton" onClick={handleBuyCourse}>
                 Buy Now
               </button>
-              <button className="blackButton">Add to Cart</button>
+              <button className="blackButton" onClick={handleAddToCart}>
+                Add to Cart
+              </button> */}
+
+              <div className="flex flex-col gap-4">
+                <button
+                  className="yellowButton"
+                  onClick={
+                    user &&
+                    response?.data?.courseDetails?.studentsEnrolled.includes(
+                      user?._id
+                    )
+                      ? () => navigate("/dashboard/enrolled-courses")
+                      : handleBuyCourse
+                  }
+                >
+                  {user &&
+                  response?.data?.courseDetails?.studentsEnrolled.includes(
+                    user?._id
+                  )
+                    ? "Go To Course"
+                    : "Buy Now"}
+                </button>
+                {(!user ||
+                  !response?.data?.courseDetails?.studentsEnrolled.includes(
+                    user?._id
+                  )) && (
+                  <button onClick={handleAddToCart} className="blackButton">
+                    Add to Cart
+                  </button>
+                )}
+              </div>
             </div>
           </div>
           {/* Courses Card */}
           <div className="right-[1rem] top-[60px] mx-auto hidden min-h-[600px] w-1/3 max-w-[410px] translate-y-24 md:translate-y-0 lg:absolute  lg:block">
             <CourseDetailsCard
+              handleAddToCart={handleAddToCart}
               course={response?.data?.courseDetails}
               setConfirmationModal={setConfirmationModal}
               handleBuyCourse={handleBuyCourse}
