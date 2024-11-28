@@ -6,6 +6,7 @@ const bcrypt = require("bcrypt");
 const Profile = require("../models/Profile");
 const jwt = require("jsonwebtoken");
 const { passwordUpdate } = require("../mail/templates/passswordUpdate");
+const CourseProgress = require("../models/CourseProgress");
 
 exports.signup = async (req, res) => {
   try {
@@ -81,6 +82,12 @@ exports.signup = async (req, res) => {
       contactNumber: null,
     });
 
+    // const courseProgress = await CourseProgress.create({
+    //   courseId: null,
+    //   userId: null,
+    //   completedVideos: [],
+    // });
+
     const user = await User.create({
       firstName,
       lastName,
@@ -118,7 +125,11 @@ exports.login = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email }).populate("additionalDetails");
+    const user = await User.findOne({ email })
+      .populate("additionalDetails")
+      .populate("courseProgress");
+
+    console.log("-------------user here----->", user);
 
     if (!user) {
       return res.status(401).json({
@@ -195,7 +206,6 @@ exports.sendOTP = async (req, res) => {
         lowerCaseAlphabets: false,
         specialChars: false,
       });
-
       checkOtpExist = await OTP.findOne({ otp: otp });
     }
 

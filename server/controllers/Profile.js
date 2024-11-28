@@ -85,7 +85,10 @@ exports.getAllUserDetails = async (req, res) => {
   try {
     const id = req.user.id;
 
-    const user = await User.findById(id).populate("additionalDetails").exec();
+    const user = await User.findById(id)
+      .populate("additionalDetails")
+      .populate("courseProgress")
+      .exec();
 
     return res.status(200).json({
       success: true,
@@ -157,11 +160,11 @@ exports.getEnrolledCourses = async (req, res) => {
     userDetails = userDetails.toObject();
     console.log("userDetails--------------------------------------->");
     console.log(userDetails);
-    var SubsectionLength = 0;
-    for (var i = 0; i < userDetails.courses.length; i++) {
+    let SubsectionLength = 0;
+    for (let i = 0; i < userDetails.courses.length; i++) {
       let totalDurationInSeconds = 0;
       SubsectionLength = 0;
-      for (var j = 0; j < userDetails.courses[i].courseContent.length; j++) {
+      for (let j = 0; j < userDetails.courses[i].courseContent.length; j++) {
         totalDurationInSeconds += userDetails.courses[i].courseContent[
           j
         ].subSection.reduce(
@@ -175,15 +178,17 @@ exports.getEnrolledCourses = async (req, res) => {
           userDetails.courses[i].courseContent[j].subSection.length;
       }
       let courseProgressCount = await CourseProgress.findOne({
-        courseID: userDetails.courses[i]._id,
+        courseId: userDetails.courses[i]._id,
         userId: userId,
       });
+      console.log("profile.js----------->", courseProgressCount);
       courseProgressCount = courseProgressCount?.completedVideos.length;
       if (SubsectionLength === 0) {
         userDetails.courses[i].progressPercentage = 100;
       } else {
         // To make it up to 2 decimal point
         const multiplier = Math.pow(10, 2);
+        console.log(courseProgressCount);
         userDetails.courses[i].progressPercentage =
           Math.round(
             (courseProgressCount / SubsectionLength) * 100 * multiplier

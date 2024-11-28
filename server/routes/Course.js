@@ -42,6 +42,7 @@ const {
   isStudent,
   isAdmin,
 } = require("../middlewares/auth");
+const { updateCourseProgress } = require("../controllers/courseProgress");
 
 router.post("/createCourse", auth, isInstructor, createCourse);
 
@@ -68,6 +69,8 @@ router.get("/getAllCourses", getAllCourses);
 router.post("/getFullCourseDetails", auth, getFullCourseDetails);
 
 router.post("/getCourseDetails", getCourseDetails);
+
+router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress);
 
 router.delete("/deleteCourse", deleteCourse);
 

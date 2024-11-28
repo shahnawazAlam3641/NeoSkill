@@ -3,6 +3,10 @@ import { profileEndpoints } from "../api";
 import { setLoading, setUser } from "../../slices/profileSlice";
 import { apiConnector } from "../apiConnector";
 import { logout } from "./authAPI";
+import {
+  updateCompletedLectures,
+  setCompletedLectures,
+} from "../../slices/viewCourseSlice";
 
 const {
   GET_USER_DETAILS_API,
@@ -29,6 +33,8 @@ export function getUserDetails(token, navigate) {
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.data.lastName}`;
 
       dispatch(setUser({ ...response.data.user, image: userImage }));
+      console.log("here---------->", response?.data?.user?.courseProgress);
+      // dispatch(setCompletedLectures(response?.data?.user?.courseProgress));
     } catch (error) {
       dispatch(logout(navigate));
       console.log("GET_USER_DETAILS API ERROR............", error);

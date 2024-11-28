@@ -17,10 +17,10 @@ const EnrolledCourses = () => {
 
         // Filtering the published course out
         const filterPublishCourse = res.filter((ele) => ele.status !== "Draft");
-        // console.log(
-        //   "Viewing all the couse that is Published",
-        //   filterPublishCourse
-        // )
+        console.log(
+          "Viewing all the couse that is Published",
+          filterPublishCourse
+        );
 
         setEnrolledCourses(filterPublishCourse);
       } catch (error) {
@@ -84,6 +84,7 @@ const EnrolledCourses = () => {
               <div className="w-1/4 px-2 py-3">{course?.totalDuration}</div>
               <div className="flex w-1/5 flex-col gap-2 px-2 py-3">
                 <p>Progress: {course.progressPercentage || 0}%</p>
+                {console.log("here it is ---------->", course)}
                 <ProgressBar
                   completed={course.progressPercentage || 0}
                   height="8px"

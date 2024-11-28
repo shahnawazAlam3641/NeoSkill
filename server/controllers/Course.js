@@ -60,7 +60,7 @@ exports.createCourse = async (req, res) => {
     }
 
     const instructorDetails = await User.findById(userId, {
-      accountType: "instructor",
+      accountType: "Instructor",
     });
 
     if (!instructorDetails) {
@@ -78,7 +78,7 @@ exports.createCourse = async (req, res) => {
     if (!categoryDetails) {
       return res.status(404).json({
         success: false,
-        message: "TAg Details not found",
+        message: "Category Details not found",
       });
     }
 
@@ -91,6 +91,7 @@ exports.createCourse = async (req, res) => {
       courseName,
       courseDescription,
       instructor: instructorDetails._id,
+      whatYouWillLearn: whatYouWillLearn,
       price,
       tag: tag,
       category: categoryDetails._id,
@@ -103,6 +104,17 @@ exports.createCourse = async (req, res) => {
       { _id: instructorDetails._id },
       {
         $push: { courses: newCourse._id },
+      },
+      { new: true }
+    );
+
+    // Add the new course to the Categories
+    const categoryDetails2 = await Category.findByIdAndUpdate(
+      { _id: category },
+      {
+        $push: {
+          courses: newCourse._id,
+        },
       },
       { new: true }
     );
@@ -128,7 +140,7 @@ exports.getAllCourses = async (req, res) => {
   try {
     //TODO: change the below statement incrementally
     const allCourses = await Course.find(
-      {},
+      { status: "Published" },
       {
         courseName: true,
         price: true,
@@ -238,7 +250,7 @@ exports.getFullCourseDetails = async (req, res) => {
       .exec();
 
     let courseProgressCount = await CourseProgress.findOne({
-      courseID: courseId,
+      courseId: courseId,
       userId: userId,
     });
 

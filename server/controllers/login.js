@@ -1,6 +1,7 @@
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const CourseProgress = require("../models/CourseProgress");
 require("dotenv").config();
 
 const login = async (req, res) => {
@@ -14,7 +15,14 @@ const login = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ email }).populate("additionalDetails");
+    const user = await User.findOne({ email })
+      .populate("additionalDetails")
+      .populate({
+        path: "courseProgress",
+        populate: {
+          path: "completedVideos",
+        },
+      });
 
     if (!user) {
       return res.status(401).json({
