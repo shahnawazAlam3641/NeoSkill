@@ -19,7 +19,7 @@ exports.createRating = async (req, res) => {
       });
     }
 
-    const alreadyReviewed = await RatingAndReview.findOne({
+    const alreadyReviewed = await RatingAndReviews.findOne({
       user: userId,
       course: courseId,
     });
@@ -31,7 +31,7 @@ exports.createRating = async (req, res) => {
       });
     }
 
-    const ratingReview = await RatingAndReview.create({
+    const ratingReview = await RatingAndReviews.create({
       rating,
       review,
       course: courseId,
@@ -42,11 +42,13 @@ exports.createRating = async (req, res) => {
       { _id: courseId },
       {
         $push: {
-          ratingAndReview: ratingReview._id,
+          ratingAndReviews: ratingReview._id,
         },
       },
       { new: true }
     );
+
+    console.log(updatedCourseDetails);
 
     return res.status(200).json({
       success: true,
@@ -68,7 +70,7 @@ exports.getAverageRating = async (req, res) => {
     const courseId = req.body.courseId;
 
     // Calculate the average rating using the MongoDB aggregation pipeline
-    const result = await RatingAndReview.aggregate([
+    const result = await RatingAndReviews.aggregate([
       {
         $match: {
           course: new mongoose.Types.ObjectId(courseId), // Convert courseId to ObjectId

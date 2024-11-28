@@ -98,7 +98,7 @@ const CourseDetails = () => {
     courseContent,
     ratingAndReviews,
     instructor,
-    studentsEnroled,
+    studentsEnrolled,
     createdAt,
   } = response?.data?.courseDetails;
 
@@ -153,7 +153,7 @@ const CourseDetails = () => {
                 <span className="text-yellow-25">{avgReviewCount}</span>
                 <RatingStars Review_Count={avgReviewCount} Star_Size={24} />
                 <span>{`(${ratingAndReviews.length} reviews)`}</span>
-                <span>{`${studentsEnroled.length} students enrolled`}</span>
+                <span>{`${studentsEnrolled.length} students enrolled`}</span>
               </div>
               <div>
                 <p className="">
