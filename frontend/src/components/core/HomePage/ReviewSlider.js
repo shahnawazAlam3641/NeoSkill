@@ -130,9 +130,9 @@ const ReviewSlider = () => {
                     <div className="flex flex-col">
                       <h1 className="font-semibold text-richblack-5">{`${review?.user?.firstName} ${review?.user?.lastName}`}</h1>
                       <h2 className="text-[12px] font-medium text-richblack-500">
-                        <Link to={`/courses/${review?.course._id}`}>
-                          {review?.course?.courseName}
-                        </Link>
+                        {/* <Link to={`/courses/${review?.course._id}`}> */}
+                        {review?.course?.courseName}
+                        {/* </Link> */}
                       </h2>
                     </div>
                   </div>
