@@ -7,7 +7,7 @@ import { VscSignOut } from "react-icons/vsc";
 import { logout } from "../../../services/operations/authAPI";
 import ConfirmationModal from "../../common/ConfirmationModal";
 
-const Sidebar = () => {
+const Sidebar = ({ sidebarVisible }) => {
   const { user, loading: profileLoading } = useSelector(
     (state) => state.profile
   );
@@ -26,7 +26,11 @@ const Sidebar = () => {
 
   return (
     <>
-      <div className="flex h-[calc(100vh-3.5rem)] min-w-[220px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 py-10">
+      <div
+        className={` absolute   ${
+          sidebarVisible ? "translate-x-0" : "-translate-x-full"
+        } z-50 flex h-[calc(100vh-3.5rem)] min-w-[220px]  flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 py-10 transition-transform duration-500`}
+      >
         <div className="flex flex-col">
           {sidebarLinks.map((link) => {
             if (link.type && user?.accountType !== link.type) return null;

@@ -25,7 +25,7 @@ const RenderSteps = () => {
 
   return (
     <>
-      <div className="relative mb-2 flex w-full justify-center">
+      <div className="relative mb-2 flex w-full max-w-[90vw] justify-center">
         {steps.map((item) => (
           <>
             <div className="flex flex-col items-center " key={item.id}>
@@ -56,11 +56,11 @@ const RenderSteps = () => {
         ))}
       </div>
 
-      <div className="relative mb-16 flex w-full select-none justify-between">
+      <div className="relative mb-16 flex w-full max-w-[90vw] select-none justify-between">
         {steps.map((item) => (
           <>
             <div
-              className="flex min-w-[130px] flex-col items-center gap-y-2"
+              className="flex min-w-[110px] flex-col items-center gap-y-2"
               key={item.id}
             >
               <p

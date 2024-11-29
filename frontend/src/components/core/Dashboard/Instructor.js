@@ -38,7 +38,7 @@ const Instructor = () => {
 
   return (
     <div>
-      <div className="space-y-2">
+      <div className="space-y-2 ">
         <h1 className="text-2xl font-bold text-richblack-5">
           Hi {user?.firstName} 👋
         </h1>
@@ -50,12 +50,12 @@ const Instructor = () => {
         <div className="spinner"></div>
       ) : courses.length > 0 ? (
         <div>
-          <div className="my-4 flex h-[450px] space-x-4">
+          <div className="flex-col lg:flex-row my-4 flex gap-4 ">
             {/* Render chart / graph */}
             {totalAmount > 0 || totalStudents > 0 ? (
               <InstructorChart courses={instructorData} />
             ) : (
-              <div className="flex-1 rounded-md bg-richblack-800 p-6">
+              <div className=" rounded-md bg-richblack-800 p-6">
                 <p className="text-lg font-bold text-richblack-5">Visualize</p>
                 <p className="mt-4 text-xl font-medium text-richblack-50">
                   Not Enough Data To Visualize
@@ -63,9 +63,9 @@ const Instructor = () => {
               </div>
             )}
             {/* Total Statistics */}
-            <div className="flex min-w-[250px] flex-col rounded-md bg-richblack-800 p-6">
+            <div className="flex  flex-col w-full rounded-md bg-richblack-800 p-6 min-w-44">
               <p className="text-lg font-bold text-richblack-5">Statistics</p>
-              <div className="mt-4 space-y-4">
+              <div className="flex flex-row lg:flex-col flex-wrap gap-4  mt-4 justify-around">
                 <div>
                   <p className="text-lg text-richblack-200">Total Courses</p>
                   <p className="text-3xl font-semibold text-richblack-50">
@@ -95,16 +95,16 @@ const Instructor = () => {
                 <p className="text-xs font-semibold text-yellow-50">View All</p>
               </Link>
             </div>
-            <div className="my-4 flex items-start space-x-6">
+            <div className="my-4 flex items-start gap-4 overflow-auto">
               {console.log(courses)}
               {courses.slice(0, 3).map((course) => (
-                <div key={course._id} className="w-1/3">
+                <div key={course._id} className="min-w-64 my-4">
                   <img
                     src={course.thumbnail}
                     alt={course.courseName}
                     className="h-[201px] w-full rounded-md object-cover"
                   />
-                  <div className="mt-3 w-full">
+                  <div className="mt-3 w-full px-2">
                     <p className="text-sm font-medium text-richblack-50">
                       {course.courseName}
                     </p>

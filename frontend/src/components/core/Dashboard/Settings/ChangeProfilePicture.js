@@ -56,10 +56,11 @@ const ChangeProfilePicture = () => {
       previewFile(imageFile);
     }
   }, [imageFile]);
+
   return (
     <>
       <div className="flex items-center justify-between rounded-md border-[1px] border-richblack-700 bg-richblack-800 p-8 px-12 text-richblack-5">
-        <div className="flex items-center gap-x-4">
+        <div className="flex items-center gap-4 flex-wrap">
           <img
             src={previewSource || user?.image}
             alt={`profile-${user?.firstName}`}
