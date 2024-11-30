@@ -134,7 +134,12 @@ const Catalog = () => {
             {catalogPageData?.data?.mostSellingCourses
               ?.slice(0, 4)
               .map((course, i) => (
-                <CourseCard course={course} key={i} Height={"h-[400px]"} />
+                <CourseCard
+                  className="max-w-4"
+                  course={course}
+                  key={i}
+                  Height={""}
+                />
               ))}
           </div>
         </div>
