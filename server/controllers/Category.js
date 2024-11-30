@@ -91,8 +91,11 @@ exports.categoryPageDetails = async (req, res) => {
         path: "courses",
         match: { status: "Published" },
         populate: "ratingAndReviews",
+        populate: "instructor",
       })
       .exec();
+
+    console.log("selectedCategory----------------->", selectedCategory);
 
     if (!selectedCategory) {
       return res
