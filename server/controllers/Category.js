@@ -90,12 +90,9 @@ exports.categoryPageDetails = async (req, res) => {
       .populate({
         path: "courses",
         match: { status: "Published" },
-        populate: "ratingAndReviews",
-        populate: "instructor",
+        populate: [{ path: "ratingAndReviews" }, { path: "instructor" }],
       })
       .exec();
-
-    console.log("selectedCategory----------------->", selectedCategory);
 
     if (!selectedCategory) {
       return res
