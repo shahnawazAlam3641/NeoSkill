@@ -17,6 +17,8 @@ const ViewCourse = () => {
   const dispatch = useDispatch();
   const [reviewModal, setReviewModal] = useState(false);
 
+  const [isVideoSidebar, setIsVideoSidebar] = useState(true);
+
   useEffect(() => {
     (async () => {
       const courseData = await getFullDetailsOfCourse(courseId, token);
@@ -36,10 +38,19 @@ const ViewCourse = () => {
   return (
     <>
       <div className="relative flex min-h-[calc(100vh-3.5rem)]">
-        <VideoDetailsSidebar setReviewModal={setReviewModal} />
+        <VideoDetailsSidebar
+          isVideoSidebar={isVideoSidebar}
+          setIsVideoSidebar={setIsVideoSidebar}
+          setReviewModal={setReviewModal}
+        />
         <div className="h-[calc(100vh-3.5rem)] flex-1 overflow-auto">
           <div className="mx-6">
-            <Outlet />
+            <Outlet
+              context={{
+                setIsVideoSidebar: setIsVideoSidebar,
+                isVideoSidebar: isVideoSidebar,
+              }}
+            />
           </div>
         </div>
       </div>

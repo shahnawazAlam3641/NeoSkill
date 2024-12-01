@@ -3,9 +3,15 @@ import { useSelector } from "react-redux";
 import { useLocation, useNavigate, useParams } from "react-router";
 import IconBtn from "../../common/IconBtn";
 import { BsChevronDown } from "react-icons/bs";
-import { IoIosArrowBack } from "react-icons/io";
+import { IoIosArrowBack, IoIosClose, IoMdCloseCircle } from "react-icons/io";
+import { IoCloseCircle } from "react-icons/io5";
+import { IoMdCloseCircleOutline } from "react-icons/io";
 
-const VideoDetailsSlidebar = ({ setReviewModal }) => {
+const VideoDetailsSlidebar = ({
+  setReviewModal,
+  isVideoSidebar,
+  setIsVideoSidebar,
+}) => {
   const [activeStatus, setActiveStatus] = useState("");
   const [videoBarActive, setVideoBarActive] = useState("");
   const navigate = useNavigate();
@@ -39,17 +45,22 @@ const VideoDetailsSlidebar = ({ setReviewModal }) => {
 
   return (
     <>
-      <div className="flex h-[calc(100vh-3.5rem)] w-[320px] max-w-[350px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800">
+      <div
+        className={` absolute z-10 overflow-hidden shadow-[rgba(0,0,15,0.5)_100px_5px_40px_10px] flex h-[calc(100vh-3.5rem)] transition-all duration-200  w-[320px] max-w-[350px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 ${
+          isVideoSidebar ? "flex" : "w-0"
+        }`}
+      >
         <div className="mx-5 flex flex-col items-start justify-between gap-2 gap-y-4 border-b border-richblack-600 py-5 text-lg font-bold text-richblack-25">
           <div className="flex w-full items-center justify-between ">
             <div
               onClick={() => {
-                navigate(`/dashboard/enrolled-courses`);
+                setIsVideoSidebar(false);
+                // navigate(`/dashboard/enrolled-courses`);
               }}
-              className="flex h-[35px] w-[35px] items-center justify-center rounded-full bg-richblack-100 p-1 text-richblack-700 hover:scale-90"
+              className="flex h-[35px] w-[35px] items-center justify-center rounded-full bg-richblack-100 p-1 transition-all duration-200 text-richblack-700 hover:scale-90"
               title="back"
             >
-              <IoIosArrowBack size={30} />
+              <IoIosClose size={30} />
             </div>
             <IconBtn
               text="Add Review"

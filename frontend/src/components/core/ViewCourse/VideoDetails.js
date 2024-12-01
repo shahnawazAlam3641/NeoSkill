@@ -1,12 +1,20 @@
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate, useParams } from "react-router";
+import {
+  useLocation,
+  useNavigate,
+  useOutletContext,
+  useParams,
+} from "react-router";
 import { markLectureAsComplete } from "../../../services/operations/courseDetailsAPI";
 import { updateCompletedLectures } from "../../../slices/viewCourseSlice";
 import { BigPlayButton, Player } from "video-react";
 import IconBtn from "../../common/IconBtn";
 
+import { IoIosArrowBack, IoIosClose, IoMdCloseCircle } from "react-icons/io";
+
 const VideoDetails = () => {
+  const { setIsVideoSidebar, isVideoSidebar } = useOutletContext();
   const { courseId, sectionId, subSectionId } = useParams();
   console.log("courseId, sectionId, subSectionId----------------??");
   console.log(courseId, sectionId, subSectionId);
@@ -223,7 +231,7 @@ const VideoDetails = () => {
   };
 
   return (
-    <div className="flex flex-col gap-5 text-white">
+    <div className="relative flex flex-col gap-5 text-white pt-14">
       {!videoData ? (
         <img
           src={previewSource}
@@ -295,6 +303,17 @@ const VideoDetails = () => {
 
       <h1 className="mt-4 text-3xl font-semibold">{videoData?.title}</h1>
       <p className="pt-2 pb-6">{videoData?.description}</p>
+      <div
+        onClick={() => {
+          console.log("clicked", isVideoSidebar);
+          setIsVideoSidebar(true);
+        }}
+        className={`absolute rotate-180 top-2  left-0 flex h-[30px] w-[30px] items-center justify-center rounded-full bg-richblack-100 p-1 text-richblack-700 transition-all duration-200 hover:scale-90 ${
+          isVideoSidebar ? "hidden" : "flex"
+        }`}
+      >
+        <IoIosArrowBack size={30} />
+      </div>
     </div>
   );
 };
