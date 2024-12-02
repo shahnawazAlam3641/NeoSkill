@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import Sidebar from "../components/core/Dashboard/Sidebar";
 import { Outlet } from "react-router";
@@ -20,10 +20,17 @@ const Dashboard = () => {
 
   return (
     <div className="relative  flex min-h-[calc(100vh-3.5rem)] ">
-      {sidebarVisible ? <Sidebar sidebarVisible={sidebarVisible} /> : null}
+      {sidebarVisible ? (
+        <Sidebar
+          sidebarVisible={sidebarVisible}
+          setSidebarVisible={setSidebarVisible}
+        />
+      ) : null}
 
       <FaRegArrowAltCircleRight
-        onClick={() => setSidebarVisible(!sidebarVisible)}
+        onClick={(e) => {
+          setSidebarVisible(!sidebarVisible);
+        }}
         className={`text-white absolute z-[51] top-2 left-2 w-6 h-6 cursor-pointer hover:bg-white hover:text-richblack-800 rounded-full transition-all duration-200 ${
           sidebarVisible ? "rotate-180" : ""
         }`}

@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AiOutlineMenu, AiOutlineShoppingCart } from "react-icons/ai";
 import { BsChevronDown } from "react-icons/bs";
 import { useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import { apiConnector } from "../../services/apiConnector";
 import { categories } from "../../services/api";
 import { ACCOUNT_TYPE } from "../../utils/constants";
 import ProfileDropdown from "../core/Auth/ProfileDropdown";
+import useOnClickOutside from "../../hooks/useOnClickOutside";
 
 // const subLinks = [
 //   {
@@ -40,6 +41,10 @@ const Navbar = () => {
   const [loading, setLoading] = useState(false);
 
   const [isDropdown, setIsDropdown] = useState(false);
+
+  const burgerDropdownRef = useRef(null);
+
+  useOnClickOutside(burgerDropdownRef, () => setIsDropdown(false));
 
   useEffect(() => {
     const getCategories = async () => {
@@ -178,7 +183,11 @@ const Navbar = () => {
         {isDropdown && (
           <>
             <div className="absolute md:hidden text-white right-[7%] top-[6.5%] z-40 rotate-45 rounded-sm bg-richblack-800 shadow-white shadow-2xl min-h-5 min-w-5"></div>
-            <div className="absolute md:hidden text-white right-[5%] top-[7%] z-50 rounded-md bg-richblack-800 p-4 flex flex-col gap-4 transition-all duration-500 shadow-2xl shadow-richblack-900">
+            <div
+              onClick={(e) => e.stopPropagation()}
+              ref={burgerDropdownRef}
+              className="absolute md:hidden text-white right-[5%] top-[7%] z-50 rounded-md bg-richblack-800 p-4 flex flex-col gap-4 transition-all duration-500 shadow-2xl shadow-richblack-900"
+            >
               <nav className="">
                 <ul className="flex flex-col gap-4 items-center text-richblack-25">
                   {NavbarLinks.map((link, index) => (
