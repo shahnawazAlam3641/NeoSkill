@@ -56,6 +56,12 @@ const Upload = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedFile, setValue]);
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.style = ""; // Remove all inline styles
+    }
+  }, []);
+
   return (
     <div className="flex flex-col space-y-2">
       <label className="text-sm text-richblack-5" htmlFor={name}>
@@ -93,10 +99,14 @@ const Upload = ({
           </div>
         ) : (
           <div
-            className="flex w-full flex-col items-center p-6"
+            className="flex relative w-full flex-col items-center p-6"
             {...getRootProps()}
           >
-            <input {...getInputProps()} ref={inputRef} />
+            <input
+              className="h-full w-full absolute cursor-pointer opacity-0"
+              {...getInputProps()}
+              ref={inputRef}
+            />
             <div className="grid aspect-square w-14 place-items-center rounded-full bg-pure-greys-800">
               <FiUploadCloud className="text-2xl text-yellow-50" />
             </div>
