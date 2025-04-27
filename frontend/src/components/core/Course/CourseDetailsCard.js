@@ -54,7 +54,7 @@ const CourseDetailsCard = ({
   return (
     <>
       <div
-        className={`flex flex-col gap-4 rounded-md  bg-richblack-700 p-4 text-richblack-5`}
+        className={`flex flex-col gap-4 rounded-md  bg-richblack-700 p-4  text-richblack-5`}
       >
         {/* Course Image */}
         <img

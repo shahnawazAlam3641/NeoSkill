@@ -19,7 +19,7 @@ const CourseCard = ({ course, Height }) => {
   return (
     <>
       <Link to={`/courses/${course._id}`}>
-        <div className="flex flex-col min-w-80 max-w-[90vw]">
+        <div className="flex flex-col min-w-80 w-80 max-w-[90vw]">
           <div className="rounded-lg">
             <img
               src={course?.thumbnail}
