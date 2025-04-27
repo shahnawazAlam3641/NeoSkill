@@ -46,14 +46,15 @@ const VideoDetailsSlidebar = ({
   return (
     <>
       <div
-        className={` absolute z-10 overflow-hidden shadow-[rgba(0,0,15,0.5)_100px_5px_40px_10px] flex h-[calc(100vh-3.5rem)] transition-all duration-200  w-[320px] max-w-[350px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 ${
-          isVideoSidebar ? "flex" : "w-0"
+        className={` absolute z-[101] overflow-hidden shadow-[rgba(0,0,15,0.5)_100px_5px_40px_10px] flex h-[calc(100vh-3.5rem)] transition-all duration-200  w-[320px] max-w-[350px] flex-col border-r-[1px] border-r-richblack-700 bg-richblack-800 ${
+          isVideoSidebar ? "flex" : "hidden"
         }`}
       >
         <div className="mx-5 flex flex-col items-start justify-between gap-2 gap-y-4 border-b border-richblack-600 py-5 text-lg font-bold text-richblack-25">
           <div className="flex w-full items-center justify-between ">
             <div
               onClick={() => {
+                console.log("first");
                 setIsVideoSidebar(false);
                 // navigate(`/dashboard/enrolled-courses`);
               }}

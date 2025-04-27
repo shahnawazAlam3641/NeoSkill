@@ -20,7 +20,7 @@ const ContactUsForm = () => {
       const toastId = toast.loading("Sending your message");
       setLoading(true);
 
-      console.log(contactusEndpoint.CONTACT_US_API);
+      // console.log(contactusEndpoint.CONTACT_US_API);
       const res = await apiConnector(
         "POST",
         contactusEndpoint.CONTACT_US_API,

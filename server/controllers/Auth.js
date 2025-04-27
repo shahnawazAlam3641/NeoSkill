@@ -55,7 +55,6 @@ exports.signup = async (req, res) => {
     const recentOtp = await OTP.find({ email })
       .sort({ createdAt: -1 })
       .limit(1);
-    console.log(recentOtp);
 
     if (recentOtp.length == 0) {
       return res.status(400).json({
@@ -128,8 +127,6 @@ exports.login = async (req, res) => {
     const user = await User.findOne({ email })
       .populate("additionalDetails")
       .populate("courseProgress");
-
-    console.log("-------------user here----->", user);
 
     if (!user) {
       return res.status(401).json({

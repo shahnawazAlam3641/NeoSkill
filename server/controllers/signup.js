@@ -49,7 +49,6 @@ const signup = async (req, res) => {
     const recentOtp = await OTP.find({ email })
       .sort({ createdAt: -1 })
       .limit(1);
-    console.log(recentOtp);
 
     if (recentOtp.length == 0) {
       return res.status(400).json({

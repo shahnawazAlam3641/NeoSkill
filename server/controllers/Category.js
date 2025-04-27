@@ -17,8 +17,6 @@ exports.createCategory = async (req, res) => {
 
     const categoryDetails = await Category.create({ name, description });
 
-    console.log(categoryDetails);
-
     return res.status(200).json({
       success: true,
       message: "Category created successfully",
@@ -113,7 +111,6 @@ exports.categoryPageDetails = async (req, res) => {
       _id: { $ne: categoryId },
     });
 
-    console.log(categoriesExceptSelected);
     // .populate("courses");
 
     // let differentCourses = [];

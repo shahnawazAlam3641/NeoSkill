@@ -55,7 +55,6 @@ exports.createCourse = async (req, res) => {
     // //todo: veVerify that userId and instructorDetails._id  are same or different ?
 
     if (!status || status === undefined) {
-      console.log(status);
       status = "Draft";
     }
 
@@ -197,8 +196,6 @@ exports.getCourseDetails = async (req, res) => {
       });
     }
 
-    console.log("courseDetails", courseDetails);
-
     let totalDurationInSeconds = 0;
     courseDetails.courseContent.forEach((content) => {
       content.subSection.forEach((subSection) => {
@@ -253,8 +250,6 @@ exports.getFullCourseDetails = async (req, res) => {
       courseId: courseId,
       userId: userId,
     });
-
-    console.log("courseProgressCount : ", courseProgressCount);
 
     if (!courseDetails) {
       return res.status(400).json({
@@ -332,7 +327,6 @@ exports.editCourse = async (req, res) => {
 
     // If Thumbnail Image is found, update it
     if (req.files) {
-      console.log("thumbnail update");
       const thumbnail = req.files.thumbnailImage;
       const thumbnailImage = await uploadImageToCloudinary(
         thumbnail.tempFilePath,

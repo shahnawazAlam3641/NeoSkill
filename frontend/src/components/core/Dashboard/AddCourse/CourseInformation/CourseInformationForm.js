@@ -31,13 +31,13 @@ const CourseInformationForm = () => {
   const [loading, setLoading] = useState(false);
   const [courseCategories, setCourseCategories] = useState([]);
 
-  console.log(course, editCourse);
+  // console.log(course, editCourse);
 
   useEffect(() => {
     const getCategories = async () => {
       setLoading(true);
       const categories = await fetchCourseCategories();
-      console.log(categories);
+      // console.log(categories);
       if (categories.length > 0) {
         // console.log("categories", categories)
         setCourseCategories(categories);

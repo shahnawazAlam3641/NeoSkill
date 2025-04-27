@@ -38,7 +38,7 @@ function App() {
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
-      console.log(localStorage.getItem("token"));
+      // console.log(localStorage.getItem("token"));
       const token = JSON.parse(localStorage.getItem("token"));
       dispatch(getUserDetails(token, navigate));
     }

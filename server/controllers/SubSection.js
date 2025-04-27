@@ -24,8 +24,6 @@ exports.createSubSection = async (req, res) => {
       process.env.FOLDER_NAME
     );
 
-    console.log(uploadDetails);
-
     timeDuration = secondsToDuration(Math.floor(uploadDetails.duration));
 
     const subSectionDetails = await SubSection.create({

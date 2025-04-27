@@ -16,7 +16,6 @@ exports.uploadImageToCloudinary = async (filePath, folder, height, quality) => {
   try {
     // console.log(filePath);
     return await cloudinary.uploader.upload(filePath, options);
-    console.log("hellow");
   } catch (error) {
     console.log(error);
   }

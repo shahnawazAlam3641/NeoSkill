@@ -17,7 +17,7 @@ const Instructor = () => {
       setLoading(true);
       const instructorApiData = await getInstructorData(token);
       const result = await fetchInstructorCourses(token);
-      console.log(instructorApiData);
+      // console.log(instructorApiData);
       if (instructorApiData.length) setInstructorData(instructorApiData);
       if (result) {
         setCourses(result);
@@ -96,7 +96,7 @@ const Instructor = () => {
               </Link>
             </div>
             <div className="my-4 flex items-start gap-4 overflow-auto">
-              {console.log(courses)}
+              {/* {console.log(courses)} */}
               {courses.slice(0, 3).map((course) => (
                 <div key={course._id} className="min-w-64 my-4">
                   <img
@@ -110,7 +110,7 @@ const Instructor = () => {
                     </p>
                     <div className="mt-1 flex items-center space-x-2">
                       <p className="text-xs font-medium text-richblack-300">
-                        {console.log(course)}
+                        {/* {console.log(course)} */}
                         {course.studentsEnrolled.length} students
                       </p>
                       <p className="text-xs font-medium text-richblack-300">

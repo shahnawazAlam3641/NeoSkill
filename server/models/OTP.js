@@ -25,7 +25,6 @@ async function sendVerificationEmail(email, otp) {
       "Verification Email from NeoSkill",
       emailVerificationTemplate(otp)
     );
-    console.log("Email sent Successfully ", mailResponse);
   } catch (error) {
     console.error("Error occurd while sending mail: ", error);
   }

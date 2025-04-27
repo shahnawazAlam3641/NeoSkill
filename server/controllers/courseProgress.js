@@ -31,7 +31,6 @@ exports.updateCourseProgress = async (req, res) => {
         completedVideos: [subsectionId],
       });
 
-      console.log("newProgress----------->", newProgress);
       const user = await User.findByIdAndUpdate(
         userId,
         {
@@ -39,8 +38,6 @@ exports.updateCourseProgress = async (req, res) => {
         },
         { new: true }
       );
-
-      console.log("user after progress injection-------->", user);
 
       return res.status(200).json({
         success: true,

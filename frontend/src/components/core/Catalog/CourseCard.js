@@ -30,7 +30,7 @@ const CourseCard = ({ course, Height }) => {
           <div className="flex flex-col gap-2 px-1 py-3">
             <p className="text-xl text-richblack-5">{course?.courseName}</p>
             <p className="text-sm text-richblack-50">
-              {console.log("first->>>>>>>>>>>", course)}
+              {/* {console.log("first->>>>>>>>>>>", course)} */}
               {course?.instructor?.firstName} {course?.instructor?.lastName}
             </p>
             <div className="flex items-center gap-2">

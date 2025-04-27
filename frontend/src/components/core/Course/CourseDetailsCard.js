@@ -54,13 +54,13 @@ const CourseDetailsCard = ({
   return (
     <>
       <div
-        className={`flex flex-col gap-4 rounded-md bg-richblack-700 p-4 text-richblack-5`}
+        className={`flex flex-col gap-4 rounded-md  bg-richblack-700 p-4 text-richblack-5`}
       >
         {/* Course Image */}
         <img
           src={ThumbnailImage}
           alt={course?.courseName}
-          className="max-h-[300px] min-h-[180px] w-[400px] overflow-hidden rounded-2xl object-cover md:max-w-full"
+          className="max-h-[300px] min-h-[180px] w-[400px]  overflow-hidden rounded-2xl object-cover max-w-full"
         />
 
         <div className="px-4">

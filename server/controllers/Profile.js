@@ -154,12 +154,8 @@ exports.getEnrolledCourses = async (req, res) => {
         },
       })
       .exec();
-    console.log("userDetails--------------------------------------->");
-    console.log(userDetails);
 
     userDetails = userDetails.toObject();
-    console.log("userDetails--------------------------------------->");
-    console.log(userDetails);
     let SubsectionLength = 0;
     for (let i = 0; i < userDetails.courses.length; i++) {
       let totalDurationInSeconds = 0;
@@ -181,14 +177,12 @@ exports.getEnrolledCourses = async (req, res) => {
         courseId: userDetails.courses[i]._id,
         userId: userId,
       });
-      console.log("profile.js----------->", courseProgressCount);
       courseProgressCount = courseProgressCount?.completedVideos.length;
       if (SubsectionLength === 0) {
         userDetails.courses[i].progressPercentage = 100;
       } else {
         // To make it up to 2 decimal point
         const multiplier = Math.pow(10, 2);
-        console.log(courseProgressCount);
         userDetails.courses[i].progressPercentage =
           Math.round(
             (courseProgressCount / SubsectionLength) * 100 * multiplier

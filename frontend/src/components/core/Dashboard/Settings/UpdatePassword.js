@@ -22,9 +22,9 @@ const UpdatePassword = () => {
   } = useForm();
 
   const submitPasswordForm = async (data) => {
-    console.log("password Data - ", data);
+    // console.log("password Data - ", data);
     try {
-      console.log("callimng change password");
+      // console.log("callimng change password");
       await changePassword(token, data);
     } catch (error) {
       console.log("ERROR MESSAGE - ", error.message);

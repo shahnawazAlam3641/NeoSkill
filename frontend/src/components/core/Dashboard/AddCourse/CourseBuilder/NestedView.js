@@ -30,7 +30,7 @@ const NestedView = ({ handleChangeEditSectionName }) => {
       courseId: course._id,
       token,
     });
-    console.log(result);
+    // console.log(result);
     if (result) {
       dispatch(setCourse(result));
     }

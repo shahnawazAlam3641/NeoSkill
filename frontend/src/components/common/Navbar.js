@@ -50,7 +50,7 @@ const Navbar = () => {
     const getCategories = async () => {
       setLoading(true);
       try {
-        console.log("Link", categories.CATEGORIES_API);
+        // console.log("Link", categories.CATEGORIES_API);
         const res = await apiConnector("GET", categories.CATEGORIES_API);
         // console.log("response", res);
         setSubLinks(res.data.allCategories);

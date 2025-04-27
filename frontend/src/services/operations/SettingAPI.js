@@ -16,7 +16,6 @@ export function updateDisplayPicture(token, formData) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...");
     try {
-      console.log(UPDATE_DISPLAY_PICTURE_API);
       const response = await apiConnector(
         "PUT",
         UPDATE_DISPLAY_PICTURE_API,
@@ -25,10 +24,6 @@ export function updateDisplayPicture(token, formData) {
           "Content-Type": "multipart/form-data",
           Authorisation: `Bearer ${token}`,
         }
-      );
-      console.log(
-        "UPDATE_DISPLAY_PICTURE_API API RESPONSE............",
-        response
       );
 
       if (!response.data.success) {
@@ -48,12 +43,10 @@ export function updateProfile(token, formData) {
   return async (dispatch) => {
     const toastId = toast.loading("Loading...");
     try {
-      console.log(UPDATE_PROFILE_API);
       // console.log(formData);
       const response = await apiConnector("PUT", UPDATE_PROFILE_API, formData, {
         Authorisation: `Bearer ${token}`,
       });
-      console.log("UPDATE_PROFILE_API API RESPONSE............", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -74,11 +67,9 @@ export function updateProfile(token, formData) {
 export async function changePassword(token, formData) {
   const toastId = toast.loading("Loading...");
   try {
-    console.log(CHANGE_PASSWORD_API, formData);
     const response = await apiConnector("PUT", CHANGE_PASSWORD_API, formData, {
       Authorisation: `Bearer ${token}`,
     });
-    console.log("CHANGE_PASSWORD_API API RESPONSE............", response);
 
     if (!response.data.success) {
       throw new Error(response.data.message);
@@ -98,7 +89,6 @@ export function deleteProfile(token, navigate) {
       const response = await apiConnector("DELETE", DELETE_PROFILE_API, null, {
         Authorisation: `Bearer ${token}`,
       });
-      console.log("DELETE_PROFILE_API API RESPONSE............", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);

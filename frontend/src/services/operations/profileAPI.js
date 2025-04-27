@@ -22,7 +22,7 @@ export function getUserDetails(token, navigate) {
       const response = await apiConnector("GET", GET_USER_DETAILS_API, null, {
         Authorisation: `Bearer ${token}`,
       });
-      console.log("GET_USER_DETAILS API RESPONSE............", response);
+      // console.log("GET_USER_DETAILS API RESPONSE............", response);
 
       if (!response.data.success) {
         throw new Error(response.data.message);
@@ -33,7 +33,6 @@ export function getUserDetails(token, navigate) {
         : `https://api.dicebear.com/5.x/initials/svg?seed=${response.data.user.firstName} ${response.data.data.lastName}`;
 
       dispatch(setUser({ ...response.data.user, image: userImage }));
-      console.log("here---------->", response?.data?.user?.courseProgress);
       // dispatch(setCompletedLectures(response?.data?.user?.courseProgress));
     } catch (error) {
       dispatch(logout(navigate));
@@ -49,7 +48,6 @@ export async function getUserEnrolledCourses(token) {
   const toastId = toast.loading("Loading...");
   let result = [];
   try {
-    console.log("enrolledCourses user api", GET_USER_ENROLLED_COURSES_API);
     const response = await apiConnector(
       "GET",
       GET_USER_ENROLLED_COURSES_API,
@@ -79,11 +77,9 @@ export async function getInstructorData(token) {
   const toastId = toast.loading("Loading...");
   let result = [];
   try {
-    console.log(GET_INSTRUCTOR_DATA_API);
     const response = await apiConnector("GET", GET_INSTRUCTOR_DATA_API, null, {
       Authorisation: `Bearer ${token}`,
     });
-    console.log("GET_INSTRUCTOR_DATA_API API RESPONSE............", response);
     result = response?.data?.courses;
   } catch (error) {
     console.log("GET_INSTRUCTOR_DATA_API API ERROR............", error);

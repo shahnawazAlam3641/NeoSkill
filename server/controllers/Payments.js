@@ -30,7 +30,6 @@ exports.capturePayment = async (req, res) => {
     try {
       // Find the course by its ID
       course = await Course.findById(course_id);
-      console.log(course);
       if (!course) {
         return res
           .status(404)
@@ -61,6 +60,7 @@ exports.capturePayment = async (req, res) => {
 
   try {
     const paymentResponse = await instance.orders.create(options);
+
     console.log(paymentResponse);
     res.json({
       success: true,
@@ -180,6 +180,7 @@ exports.capturePayment = async (req, res) => {
 //     });
 //   }
 // };
+
 exports.verifyPayment = async (req, res) => {
   const razorpay_order_id = req.body?.razorpay_order_id;
   const razorpay_payment_id = req.body?.razorpay_payment_id;
@@ -187,6 +188,8 @@ exports.verifyPayment = async (req, res) => {
   const courses = req.body?.courses;
 
   const userId = req.user.id;
+
+  console.log(req.body);
 
   if (
     !razorpay_order_id ||
@@ -267,7 +270,6 @@ const enrollStudents = async (courses, userId, res) => {
           .status(500)
           .json({ success: false, error: "Course not found" });
       }
-      console.log("Updated course: ", enrolledCourse);
 
       const courseProgress = await CourseProgress.create({
         courseId: courseId,
@@ -286,7 +288,6 @@ const enrollStudents = async (courses, userId, res) => {
         { new: true }
       );
 
-      console.log("Enrolled student: ", enrolledStudent);
       // Send an email notification to the enrolled student
       const emailResponse = await mailSender(
         enrolledStudent.email,
@@ -296,8 +297,6 @@ const enrollStudents = async (courses, userId, res) => {
           `${enrolledStudent.firstName} ${enrolledStudent.lastName}`
         )
       );
-
-      console.log("Email sent successfully: ", emailResponse);
     } catch (error) {
       console.log(error);
       return res.status(400).json({ success: false, error: error.message });

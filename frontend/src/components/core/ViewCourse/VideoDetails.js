@@ -16,8 +16,8 @@ import { IoIosArrowBack, IoIosClose, IoMdCloseCircle } from "react-icons/io";
 const VideoDetails = () => {
   const { setIsVideoSidebar, isVideoSidebar } = useOutletContext();
   const { courseId, sectionId, subSectionId } = useParams();
-  console.log("courseId, sectionId, subSectionId----------------??");
-  console.log(courseId, sectionId, subSectionId);
+  // console.log("courseId, sectionId, subSectionId----------------??");
+  // console.log(courseId, sectionId, subSectionId);
   const navigate = useNavigate();
   const location = useLocation();
   const playerRef = useRef(null);

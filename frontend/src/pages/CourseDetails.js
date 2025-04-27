@@ -45,7 +45,7 @@ const CourseDetails = () => {
     (async () => {
       try {
         const res = await fetchCourseDetails(courseId);
-        console.log("course details res: ", res);
+        // console.log("course details res: ", res);
         setResponse(res);
       } catch (error) {
         console.log("Could not fetch Course Details");
@@ -81,7 +81,7 @@ const CourseDetails = () => {
     setTotalNoOfLectures(lectures);
   }, [response]);
 
-  console.log(response);
+  // console.log(response);
 
   if (loading || !response) {
     return (
@@ -93,7 +93,7 @@ const CourseDetails = () => {
   if (!response.success) {
     return <Error />;
   }
-  console.log(response);
+  // console.log(response);
   const {
     _id: course_id,
     courseName,
