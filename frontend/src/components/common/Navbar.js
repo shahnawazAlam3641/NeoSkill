@@ -11,6 +11,7 @@ import { categories } from "../../services/api";
 import { ACCOUNT_TYPE } from "../../utils/constants";
 import ProfileDropdown from "../core/Auth/ProfileDropdown";
 import useOnClickOutside from "../../hooks/useOnClickOutside";
+import toast from "react-hot-toast";
 
 // const subLinks = [
 //   {
@@ -45,22 +46,47 @@ const Navbar = () => {
   const burgerDropdownRef = useRef(null);
 
   useOnClickOutside(burgerDropdownRef, () => setIsDropdown(false));
+  const timeoutRef = useRef(null);
 
   useEffect(() => {
     const getCategories = async () => {
       setLoading(true);
       try {
-        // console.log("Link", categories.CATEGORIES_API);
+        const toastId = toast.loading("Loading...");
+
+        // timeout to show a different toast message if the API call takes more than 6 seconds
+        timeoutRef.current = setTimeout(() => {
+          toast.dismiss(toastId);
+          toast.loading("Starting Backend server please wait", {
+            id: "backend-loading",
+          });
+        }, 6000);
+
         const res = await apiConnector("GET", categories.CATEGORIES_API);
-        // console.log("response", res);
+
+        // Clear the timeout as the API call has completed
+        clearTimeout(timeoutRef.current);
+
         setSubLinks(res.data.allCategories);
-        // console.log(subLinks);
+        toast.dismiss(toastId);
+        // Also dismiss the backend loading toast
+        toast.dismiss("backend-loading");
       } catch (error) {
         console.log("Could not fetch Categories.", error);
+        toast.dismiss();
+        toast.error("Failed to fetch categories");
       }
       setLoading(false);
     };
+
     getCategories();
+
+    return () => {
+      if (timeoutRef.current) {
+        clearTimeout(timeoutRef.current);
+      }
+      toast.dismiss();
+    };
   }, []);
 
   // console.log("sub links", subLinks)

@@ -3,9 +3,6 @@ import getAvgRating from "../../../utils/avgRating";
 import { Link } from "react-router-dom";
 import RatingStars from "../../common/RatingStars";
 
-import { FaRegStar, FaStar } from "react-icons/fa";
-import ReactStars from "react-rating-stars-component";
-
 const CourseCard = ({ course, Height }) => {
   // const avgReviewCount = GetAvgRating(course.ratingAndReviews)
   // console.log(course.ratingAndReviews)

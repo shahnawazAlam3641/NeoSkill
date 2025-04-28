@@ -57,6 +57,7 @@ const CourseInformationForm = () => {
       setValue("courseImage", course.thumbnail);
     }
     getCategories();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const isFormUpdated = () => {
