@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { MdClose } from "react-icons/md";
 import { useSelector } from "react-redux";
 
@@ -16,6 +16,7 @@ const ChipInput = ({
 
   // Setting up state for managing chips array
   const [chips, setChips] = useState([]);
+  const tagInputRef = useRef("");
 
   useEffect(() => {
     if (editCourse) {
@@ -46,6 +47,17 @@ const ChipInput = ({
         setChips(newChips);
         event.target.value = "";
       }
+    }
+  };
+
+  const addTag = () => {
+    const inputValue = tagInputRef.current.value;
+
+    if (inputValue && !chips.includes(inputValue)) {
+      // Add the chip to the array and clear the input
+      const newChips = [...chips, inputValue];
+      setChips(newChips);
+      tagInputRef.current.value = "";
     }
   };
 
@@ -85,6 +97,7 @@ const ChipInput = ({
         ))}
         {/* Render the input for adding new chips */}
         <input
+          ref={tagInputRef}
           id={name}
           name={name}
           type="text"
@@ -92,6 +105,14 @@ const ChipInput = ({
           onKeyDown={handleKeyDown}
           className="form-style w-full"
         />
+
+        <button
+          onClick={addTag}
+          type="button"
+          className="font-semibold text-yellow-50"
+        >
+          Add
+        </button>
       </div>
       {/* Render an error message if the input is required and not filled */}
       {errors[name] && (
