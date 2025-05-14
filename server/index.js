@@ -21,9 +21,21 @@ const PORT = process.env.PORT || 4000;
 
 app.use(express.json());
 app.use(cookieParser());
+
+const allowedOrigins = [
+  process.env.REACT_APP_BASE_URL,
+  "https://shahnawaz-portfolio.vercel.app",
+];
+
 app.use(
   cors({
-    origin: process.env.REACT_APP_BASE_URL,
+    origin: (origin, callback) => {
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     credentials: true,
   })
 );
